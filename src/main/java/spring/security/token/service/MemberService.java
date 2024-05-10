@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.security.token.domain.Member;
 import spring.security.token.repository.MemberRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MemberService {
@@ -28,6 +30,10 @@ public class MemberService {
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 회원"));
+    }
+
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
     }
 
 }
