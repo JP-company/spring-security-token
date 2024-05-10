@@ -3,10 +3,7 @@ package spring.security.token.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spring.security.token.controller.dto.request.MemberJoinForm;
 import spring.security.token.controller.dto.response.ResponseDto;
 import spring.security.token.controller.dto.response.ResponseListDto;
@@ -21,7 +18,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping("/member")
+    @PostMapping("/members")
     public ResponseEntity<ResponseDto<Long>> memberJoin(
             @Valid @RequestBody MemberJoinForm memberJoinForm
     ) {
@@ -33,7 +30,19 @@ public class MemberController {
         return ResponseEntity.ok(responseBody);
     }
 
-    @GetMapping("members")
+    @GetMapping("/members/{memberId}")
+    public ResponseEntity<ResponseDto<Member>> getMember(
+            @PathVariable Long memberId
+    ) {
+        Member member = memberService.findMember(memberId);
+
+        ResponseDto<Member> responseBody = ResponseDto.<Member>builder()
+                .data(member)
+                .build();
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/members")
     public ResponseEntity<ResponseListDto<Member>> getMembers() {
         List<Member> members = memberService.findMembers();
 
