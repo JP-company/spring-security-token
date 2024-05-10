@@ -37,6 +37,10 @@ public class Member {
         return new Member(loginId, loginPassword);
     }
 
+    public void setAdminRole() {
+        this.role = Role.ADMIN;
+    }
+
     private void validate() {
         // TODO - loginId, loginPassword 검증
     }
