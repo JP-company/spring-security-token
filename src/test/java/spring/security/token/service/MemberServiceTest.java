@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.security.token.domain.Member;
 import spring.security.token.domain.Role;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -45,5 +47,20 @@ class MemberServiceTest {
         // then
         Member member = memberService.findMember(savedMemberId);
         assertThat(member.getRole()).isEqualTo(Role.ADMIN);
+    }
+
+    @DisplayName("전체 회원 조회 테스트")
+    @Test
+    void all_member_find() {
+        // given
+        String loginId = "wjsdj2009";
+        String loginPassword = "Qwer1234!";
+        memberService.save(loginId, loginPassword);
+
+        // when
+        List<Member> members = memberService.findMembers();
+
+        // then
+        assertThat(members.size()).isEqualTo(1);
     }
 }
