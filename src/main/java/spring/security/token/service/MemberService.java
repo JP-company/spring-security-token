@@ -21,9 +21,13 @@ public class MemberService {
 
     @Transactional
     public void setAdminMember(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("없는 회원"));
+        Member member = this.findMember(memberId);
         member.setAdminRole();
+    }
+    
+    public Member findMember(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("없는 회원"));
     }
 
 }
